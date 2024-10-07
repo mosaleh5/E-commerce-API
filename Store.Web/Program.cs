@@ -28,6 +28,10 @@ namespace Store.Web
             builder.Services.AddDbContext<StoreDbContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            }); 
+            builder.Services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection"));
             });
             builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
             {
@@ -35,12 +39,14 @@ namespace Store.Web
                 return ConnectionMultiplexer.Connect(configurations);
             });
             builder.Services.AddApplicationServices();
+            builder.Services.AddIdentityServices();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            
             var app = builder.Build();
             await ApplySeeding.ApplyseedingAsync(app);
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -52,7 +58,7 @@ namespace Store.Web
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

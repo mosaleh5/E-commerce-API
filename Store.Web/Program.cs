@@ -39,7 +39,7 @@ namespace Store.Web
                 return ConnectionMultiplexer.Connect(configurations);
             });
             builder.Services.AddApplicationServices();
-            builder.Services.AddIdentityServices();
+            builder.Services.AddIdentityServices(builder.Configuration);
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

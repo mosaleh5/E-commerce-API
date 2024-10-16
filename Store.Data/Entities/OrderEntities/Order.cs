@@ -21,7 +21,7 @@ namespace Store.Data.Entities.OrderEntities
             => SubTotal + DeliveryMethod.Price;
         public string ? BasketId { get; set; }
 
-
+        public string ? PaymentIntentd { get; set ; }
 
     }
 }
